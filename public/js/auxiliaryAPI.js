@@ -16,10 +16,10 @@ exports.getGreetingDependOnTime =  function (myDate) {
     if (dateBegin.getTime() < dateCurrent.getTime()) {
         if (dateCurrent.getTime() >= dateEnd.getTime()) {
 
-            return "Guten Morgen"
+            return "Guten Abend"
         }
         else {
-            return "Guten Abend"
+            return "Guten Morgen"
         }
     } else {
         newVariable = dateCurrent.getTime()
