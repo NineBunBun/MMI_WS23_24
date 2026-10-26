@@ -1,5 +1,5 @@
-exports.celsiusToFahrenheit = function (x){
- return celsius*(9/5)+10
+exports.celsiusToFahrenheit = function (celsius){
+ return celsius*(9/5)+32
 }
 
 exports.fahrenheitToCelsius = function (fahrenheit){
