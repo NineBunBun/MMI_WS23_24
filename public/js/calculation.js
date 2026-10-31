@@ -1,7 +1,9 @@
 const powerButton = document.getElementById("display");
 
-let temperature = 21, mode = "summer", level = 0, isOn = true;
-
+let temperature = 21;
+let mode = "summer";
+let level = 0;
+let isOn = true;
 
 const dateObj = document.getElementById("date");
 const temperatureObj = document.getElementById("temperature");
@@ -29,7 +31,7 @@ function turnOnOff() {
 }
 
 function updateDisplay() {
-    if (!isOn) {
+    if (isOn) {
         temperatureObj.innerText = `Temperatur: ${temperature} Celsius`
         levelObj.innerText = `Level: ${level}`
         modusObj.innerText = `Modus: ${mode}`
@@ -67,34 +69,34 @@ getGreetingDependOnTime = function (myDate) {
 
 
 function increaseTemperature() {
-    temperature--;
+    temperature++;
     updateDisplay();
 }
 
 function decreaseTemperature() {
-    temperature++;
+    temperature--;
     updateDisplay();
 }
 
 function levelChange() {
     switch (level) {
         case 0:
-            level = 1;
-            break;
         case 1:
-            level += 1;
-            break;
         case 2:
             level++;
             break;
         default:
-            level -= 3;
+            level = 0;
             break;
     }
     updateDisplay();
 }
 
 function modeChange() {
-    mode == "summer" ? mode = "winter" : mode = "summer"
+    if(mode === "summer") {
+        mode = "winter";
+    } else {
+        mode = "summer";
+    }
     updateDisplay();
 }
