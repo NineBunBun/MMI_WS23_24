@@ -2,6 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const auxiliaryAPI = require('./public/js/auxiliaryAPI.js')
 
+const featureToggles = require('./featureToggles.js');
+
 const {urlencoded, json} = bodyParser;
 const port = process.env.PORT || 8080;
 
@@ -34,6 +36,13 @@ app.post('/api/fromFahrenheitToCelsius', (req, res) => {
     return res.status(200).send({
         result
     });
+});
+
+// new feature, only reachable while toggle FEATURE_KELVIN=true (evaluated per request)
+app.post('/api/fromCelsiusToKelvin', (req, res, next) => {
+    if (!featureToggles.isEnabled('kelvin')) return next();
+    const temperature = Number(req.body.temperature);
+    return res.status(200).send({result: temperature + 273.15});
 });
 
 // Setup a default catch-all route

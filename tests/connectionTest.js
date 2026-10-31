@@ -25,6 +25,21 @@ describe("POST /api/fromCelsiusToFahrenheit", function () {
     });
 });
 
+describe("feature toggle kelvin", function () {
+    afterEach(() => delete process.env.FEATURE_KELVIN);
+
+    it("is not available while the toggle is off", async function () {
+        const res = await api.post('/api/fromCelsiusToKelvin').send({temperature: 0});
+        res.body.should.not.have.property('result');
+    });
+    it("converts 0 C to 273.15 K while the toggle is on", async function () {
+        process.env.FEATURE_KELVIN = 'true';
+        const res = await api.post('/api/fromCelsiusToKelvin').send({temperature: 0});
+        res.status.should.equal(200);
+        res.body.result.should.equal(273.15);
+    });
+});
+
 describe("POST /api/fromFahrenheitToCelsius", function () {
     it("converts 212 F to 100 C (json)", async function () {
         const res = await api.post('/api/fromFahrenheitToCelsius').send({temperature: 212});
