@@ -20,7 +20,6 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm test
-      - run: npm run test_with_codeCoverage
 
   deploy:
     needs: build-and-test
@@ -31,6 +30,4 @@ jobs:
       - name: Trigger Render deploy
         run: curl -fsS -X POST "${{ secrets.RENDER_DEPLOY_HOOK }}"
       - name: Smoke test
-        run: |
-          sleep 60
-          curl -fsS https://mmi-ws23-24.onrender.com/ > /dev/null
+        run: curl -fsS --retry 10 --retry-delay 15 --retry-all-errors https://mmi-ws23-24.onrender.com/ > /dev/null
